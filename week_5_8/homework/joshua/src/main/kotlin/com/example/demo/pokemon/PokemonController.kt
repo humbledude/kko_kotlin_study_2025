@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/pokemon")
 class PokemonController(
-    val pokeApiService: PokeApiService
+    val pokeApiService: PokeApiService,
+    val favoriteService: FavoriteService,
 ) {
 
     @GetMapping("/{id}")
@@ -34,7 +35,7 @@ class PokemonController(
 
     @PostMapping("/favorites")
     fun postFavoritePokemon(@RequestBody request: FavoriteRequest) : ResponseEntity<SimpleResponse>{
-        val (pokemon, saved) = pokeApiService.saveFavoritePokemon(request.id)
+        val (pokemon, saved) = favoriteService.saveFavoritePokemon(request.id)
         if (saved) {
             return ResponseEntity.status(HttpStatus.CREATED)
                 .body( SimpleResponse(
@@ -54,7 +55,7 @@ class PokemonController(
 
     @GetMapping("/favorites")
     fun getAllFavoritePokemon(): FavoriteResponse {
-        return FavoriteResponse(pokeApiService.getAllFavoritePokemon())
+        return FavoriteResponse(favoriteService.getAllFavoritePokemon())
     }
 
 }
