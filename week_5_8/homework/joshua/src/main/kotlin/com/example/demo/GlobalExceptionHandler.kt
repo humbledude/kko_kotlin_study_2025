@@ -10,16 +10,11 @@ import org.springframework.web.bind.annotation.ResponseStatus
 @ControllerAdvice
 class GlobalExceptionHandler {
 
-    data class ErrorResponse (
-        val status : Int,
-        val message: String,
-    )
-
     @ExceptionHandler(ArithmeticException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    fun handleArithmeticException(ex: ArithmeticException): ErrorResponse {
-        return ErrorResponse (
+    fun handleArithmeticException(ex: ArithmeticException):  SimpleResponse {
+        return SimpleResponse(
             status = HttpStatus.BAD_REQUEST.value(),
             message = ex.message ?: "error",
         )
@@ -28,8 +23,8 @@ class GlobalExceptionHandler {
     @ExceptionHandler(PokemonNotFoundException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    fun handlePokemonNotFoundException(ex: PokemonNotFoundException): ErrorResponse {
-        return ErrorResponse (
+    fun handlePokemonNotFoundException(ex: PokemonNotFoundException): SimpleResponse {
+        return SimpleResponse (
             status = HttpStatus.BAD_REQUEST.value(),
             message = ex.message ?: "PokemonNotFoundException"
         )

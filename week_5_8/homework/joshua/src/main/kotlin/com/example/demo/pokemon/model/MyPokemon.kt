@@ -23,7 +23,7 @@ data class MyPokemon (
     @Column(columnDefinition = "TEXT", nullable = false)
     val sprites: PokemonSprite,
 
-    @JdbcTypeCode(SqlTypes.JSON_ARRAY)
+    @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "TEXT", nullable = false)
     val stats : List<MyPokemonStat>
 ) {
