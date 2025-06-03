@@ -1,0 +1,14 @@
+spring:
+  r2dbc:
+    url: r2dbc:mysql://localhost:3306/pokemon?ssl=false
+    username: pokemon
+    password: pokemon
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
+
+logging:
+  level:
+    org.springframework.data.r2dbc: DEBUG
+    org.springframework.web.reactive: DEBUG

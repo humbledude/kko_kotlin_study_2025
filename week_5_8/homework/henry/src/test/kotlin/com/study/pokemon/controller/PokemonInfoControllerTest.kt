@@ -5,20 +5,16 @@ import com.study.pokemon.dto.request.HttpPokemonData
 import com.study.pokemon.exception.CustomException
 import com.study.pokemon.service.PokemonService
 import io.mockk.coEvery
-import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
 import org.springframework.http.HttpStatus
-import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import kotlin.test.Test
+import org.springframework.test.web.reactive.server.WebTestClient
 
-@WebMvcTest(PokemonInfoController::class)
+@WebFluxTest(PokemonInfoController::class)
 class PokemonInfoControllerTest {
     @Autowired
-    lateinit var mockMvc: MockMvc
+    lateinit var webTestClient: WebTestClient
 
     @MockkBean
     lateinit var pokemonService: PokemonService
@@ -60,23 +56,19 @@ class PokemonInfoControllerTest {
 
         coEvery { pokemonService.getPokemonInfo(pokemonId) } returns pokemon.toDomain()
 
-        // When
-        val result =
-            mockMvc
-                .perform(get("/pokemon/$pokemonId"))
-                .andExpect {
-                    status().isOk
-                    jsonPath("$.id").value(pokemonId)
-                    jsonPath("$.name").value(pokemon.name)
-                    jsonPath("$.height").value(pokemon.height)
-                    jsonPath("$.sprites").isMap
-                    jsonPath("$.sprites.front_default").value(pokemon.sprites.frontDefault)
-                    jsonPath("$.sprites.back_default").value(pokemon.sprites.backDefault)
-                    jsonPath("$.stats").isArray
-                }
-
-        // Then
-        assertThat(result).isNotNull
+        // When & Then
+        webTestClient
+            .get()
+            .uri("/pokemon/$pokemonId")
+            .exchange()
+            .expectStatus().isOk
+            .expectBody()
+            .jsonPath("$.id").isEqualTo(pokemonId)
+            .jsonPath("$.name").isEqualTo(pokemon.name)
+            .jsonPath("$.height").isEqualTo(pokemon.height)
+            .jsonPath("$.sprites.frontDefault").isEqualTo(pokemon.sprites.frontDefault)
+            .jsonPath("$.sprites.backDefault").isEqualTo(pokemon.sprites.backDefault)
+            .jsonPath("$.stats").isArray
     }
 
     @Test
@@ -90,15 +82,11 @@ class PokemonInfoControllerTest {
                 status = HttpStatus.NOT_FOUND,
             )
 
-        // When
-        val result =
-            mockMvc
-                .perform(get("/pokemon/$pokemonId"))
-                .andExpect {
-                    status().isNotFound
-                }
-
-        // Then
-        assertThat(result).isNotNull
+        // When & Then
+        webTestClient
+            .get()
+            .uri("/pokemon/$pokemonId")
+            .exchange()
+            .expectStatus().isNotFound
     }
 }

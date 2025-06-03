@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: pokemon-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: pokemon
+      MYSQL_DATABASE: pokemon
+      MYSQL_USER: pokemon
+      MYSQL_PASSWORD: pokemon
+    volumes:
+      - mysql-data:/var/lib/mysql
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password
+
+volumes:
+  mysql-data:

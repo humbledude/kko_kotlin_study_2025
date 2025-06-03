@@ -13,12 +13,11 @@ class PokemonInfoController(
     private val pokemonService: PokemonService,
 ) {
     @GetMapping("/pokemon/{id}")
-    fun getPokemonInfo(
+    suspend fun getPokemonInfo(
         @PathVariable("id") pokemonId: Int,
-    ): ResponseEntity<Pokemon> =
-        runBlocking {
+    ): ResponseEntity<Pokemon> {
             val pokemonInfo = pokemonService.getPokemonInfo(pokemonId)
-            ResponseEntity
+            return ResponseEntity
                 .ok()
                 .body(pokemonInfo)
         }
