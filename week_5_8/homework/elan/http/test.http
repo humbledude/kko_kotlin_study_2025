@@ -21,3 +21,16 @@ GET http://localhost:8080/users
 
 ### 잘못된 id 조회는 오류
 GET http://localhost:8080/users/2393b10c-6eee-424e
+
+### 포켓몬 id 조회(외부)
+GET https://pokeapi.co/api/v2/pokemon/1
+
+### 포켓몬 id 조회
+GET http://localhost:8080/pokemon/1
+Accept: application/json
+
+### 포켓몬 즐찾 저장
+POST http://localhost:8080/favorites/pokemon/36
+
+### 포켓몬 즐찾 목록
+GET http://localhost:8080/favorites

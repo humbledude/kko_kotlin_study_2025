@@ -5,20 +5,19 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.http.codec.ClientCodecConfigurer
 import org.springframework.web.reactive.function.client.ExchangeStrategies
 import org.springframework.web.reactive.function.client.WebClient
-import java.util.function.Consumer
 
 
 @Configuration
 class RestConfig {
     @Bean
-    fun pokemonWebClient(): WebClient {
+    fun pokemonApiWebClient(): WebClient {
         val bufferSizeInBytes = 16 * 1024 * 1024
         val exchangeStrategies = ExchangeStrategies.builder()
-            .codecs(Consumer { configurer: ClientCodecConfigurer? ->
+            .codecs { configurer: ClientCodecConfigurer? ->
                 configurer!!
                     .defaultCodecs()
                     .maxInMemorySize(bufferSizeInBytes)
-            })
+            }
             .build()
 
         return WebClient.builder()

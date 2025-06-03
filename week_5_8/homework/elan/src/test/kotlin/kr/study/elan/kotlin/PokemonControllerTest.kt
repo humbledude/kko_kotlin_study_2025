@@ -35,7 +35,7 @@ class PokemonControllerTest {
             "location_area_encounters" to "https://pokeapi.co/api/v2/pokemon/35/encounters"
         )
 
-        given(pokemonService.getPokemon(anyInt())).will {
+        given(pokemonService.fetchPokemon(anyInt())).will {
             Mono.just(output)
         }
 
@@ -60,7 +60,7 @@ class PokemonControllerTest {
             "location_area_encounters" to "https://pokeapi.co/api/v2/pokemon/35/encounters"
         )
 
-        given(pokemonService.getPokemon(anyInt())).will {
+        given(pokemonService.fetchPokemon(anyInt())).will {
             Mono.just(output)
         }
 

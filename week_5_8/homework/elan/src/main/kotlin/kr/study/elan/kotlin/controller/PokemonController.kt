@@ -1,5 +1,6 @@
 package kr.study.elan.kotlin.controller
 
+import kr.study.elan.kotlin.domain.PokemonApiDto
 import kr.study.elan.kotlin.service.PokemonService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -13,7 +14,7 @@ class PokemonController(
     private val pokemonService: PokemonService
 ) {
     @GetMapping("/{id}")
-    fun getPokemon(@PathVariable id: Int): Mono<Any> {
-        return pokemonService.getPokemon(id)
+    fun getPokemon(@PathVariable id: Int): Mono<PokemonApiDto> {
+        return pokemonService.fetchPokemon(id)
     }
 }
