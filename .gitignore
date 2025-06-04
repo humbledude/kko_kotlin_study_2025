@@ -1,2 +1,64 @@
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+**/gradle-wrapper.jar
+
+# Maven
+target/
+
+# Kotlin specific
+*.kotlin_module
+*.kts
 *.jar
-.idea
+*.war
+*.ear
+
+# Spring Boot
+spring.log
+
+# Logs
+logs/
+*.log
+
+# Eclipse
+.metadata/
+*.classpath
+*.project
+*.settings/
+
+# VS Code
+.vscode/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Application properties (if you store secrets locally)
+# Uncomment if needed
+# application-*.yml
+# application-*.properties
+
+# Temporary files
+*.tmp
+*.swp
+*~
+
+# Coverage reports
+coverage/
+*.exec
+
+# IDE specific
+out/
+
+# Node (if you have frontend assets)
+node_modules/
+
+# Generated files
+*.class

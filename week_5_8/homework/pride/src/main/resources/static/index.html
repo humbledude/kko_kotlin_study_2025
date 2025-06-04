@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>포켓몬 API 테스트</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+        }
+        .section {
+            flex: 1;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .pokemon-info {
+            margin-top: 20px;
+        }
+        .pokemon-image {
+            max-width: 200px;
+            margin: 10px 0;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        input {
+            padding: 8px;
+            margin: 5px;
+        }
+        .favorite-list {
+            margin-top: 20px;
+        }
+        .favorite-item {
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin: 5px 0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>포켓몬 API 테스트</h1>
+    
+    <div class="container">
+        <div class="section">
+            <h2>포켓몬 정보 조회</h2>
+            <input type="number" id="pokemonId" placeholder="포켓몬 ID 입력" min="1">
+            <button onclick="getPokemon()">조회</button>
+            <div id="pokemonInfo" class="pokemon-info"></div>
+        </div>
+
+        <div class="section">
+            <h2>즐겨찾기</h2>
+            <input type="number" id="favoriteId" placeholder="포켓몬 ID 입력" min="1">
+            <button onclick="addFavorite()">즐겨찾기 추가</button>
+            <button onclick="getFavorites()">즐겨찾기 목록</button>
+            <div id="favoriteList" class="favorite-list"></div>
+        </div>
+    </div>
+
+    <script>
+        async function getPokemon() {
+            const id = document.getElementById('pokemonId').value;
+            try {
+                const response = await fetch(`/api/pokemon/${id}`);
+                const data = await response.json();
+                
+                const pokemonInfo = document.getElementById('pokemonInfo');
+                pokemonInfo.innerHTML = `
+                    <h3>${data.name}</h3>
+                    <img src="${data.sprites.frontDefault}" class="pokemon-image" alt="${data.name}">
+                    <p>키: ${data.height}</p>
+                    <p>ID: ${data.id}</p>
+                    <p>스탯:</p>
+                    <ul>
+                        ${data.stats.map(stat => `<li>${stat.stat.name}: ${stat.baseStat}</li>`).join('')}
+                    </ul>
+                `;
+            } catch (error) {
+                alert('포켓몬을 찾을 수 없습니다.');
+            }
+        }
+
+        async function addFavorite() {
+            const id = document.getElementById('favoriteId').value;
+            try {
+                const response = await fetch(`/api/pokemon/favorite/${id}`, {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                alert(`${data.name}이(가) 즐겨찾기에 추가되었습니다.`);
+                getFavorites();
+            } catch (error) {
+                alert('즐겨찾기 추가에 실패했습니다.');
+            }
+        }
+
+        async function getFavorites() {
+            try {
+                const response = await fetch('/api/pokemon/favorites');
+                const data = await response.json();
+                
+                const favoriteList = document.getElementById('favoriteList');
+                favoriteList.innerHTML = data.map(pokemon => `
+                    <div class="favorite-item">
+                        <h3>${pokemon.name}</h3>
+                        <img src="${pokemon.frontImageUrl}" class="pokemon-image" alt="${pokemon.name}">
+                        <p>ID: ${pokemon.pokemonId}</p>
+                        <p>키: ${pokemon.height}</p>
+                    </div>
+                `).join('');
+            } catch (error) {
+                alert('즐겨찾기 목록을 불러오는데 실패했습니다.');
+            }
+        }
+    </script>
+</body>
+</html> 
