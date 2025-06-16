@@ -44,3 +44,4 @@
 - `GET /festivals` → 저장된 목록 조회
 - `GET /festivals/today` → 날짜 기반 필터링
 - 테스트: `@WebMvcTest`, `@DataJpaTest`, `@SpringBootTest`
+

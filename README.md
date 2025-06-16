@@ -20,7 +20,7 @@
 
 ==== 주차별 주제 ====
 
-📌 1단계: 코틀린 문법 익히기 (1~4주차)
+## 📌 1단계: 코틀린 문법 익히기 (1~4주차)
 
 ✔ 목표: 코틀린의 기본 문법과 특징을 익히고, 자바와의 차이점을 이해하기
 ✔ 학습 방법: 공식 문서 & 코틀린 공식 온라인 플레이그라운드 활용
@@ -52,29 +52,39 @@
 
 ⸻
 
-📌 2단계: 코틀린 + 스프링 부트 프로젝트 (5~8주차)
+## 📘 (5~6주차): Spring + Kotlin 기반 구성 + API 테스트 입문
 
-✔ 목표: 코틀린으로 스프링 부트 프로젝트를 진행하며 실무 감각 익히기
-✔ 학습 방법: 기존 자바 코드와 비교하며 코틀린 스타일의 코드로 변환
+| 세부 주제 | 학습 목표 | 필수 학습 항목 |
+|-----------|------------|----------------|
+| Kotlin + Spring 프로젝트 셋업 | Kotlin + Spring Boot 프로젝트를 구성하고 실행할 수 있다 | `spring-boot-starter-web`, `kotlin("plugin.spring")`, `application.yml`, `@SpringBootApplication` |
+| 간단한 API 작성 | 기본 GET/POST API를 만들고 JSON 응답을 구성할 수 있다 | `@RestController`, `@GetMapping`, `@PostMapping`, `@RequestBody`, `@ResponseBody`, `ResponseEntity` |
+| 단위 테스트 | 비즈니스 로직에 대한 단위 테스트를 작성할 수 있다 | `@Test`, `org.junit.jupiter.api`, `Assertions.assertThat` |
+| API 테스트 (`@WebMvcTest`) | 컨트롤러 단위로 API 테스트를 작성할 수 있다 | `@WebMvcTest`, `MockMvc`, `mockMvc.perform(...)`, `andExpect(...)`, `status().isOk()` |
+| MockK으로 서비스 목 처리 | 서비스 계층을 Mock 처리하여 독립적으로 테스트할 수 있다 | `@MockK`, `@InjectMockKs`, `every { ... } returns ...` |
+| 예외 케이스 테스트 작성 | 실패 시 응답 코드와 메시지를 테스트할 수 있다 | `@ExceptionHandler`, `status().isBadRequest()`, 예외 클래스 작성 등 |
 
-📅 주차별 학습 내용
+🎯 **이 회차 목표**: API와 테스트를 스프링 방식으로 구현하고, MockK으로 의존성을 분리한 테스트를 직접 작성할 수 있다.
 
-✅ 5주차: 스프링 부트 프로젝트 세팅
-	•	Kotlin + Spring Boot 프로젝트 생성
-	•	코틀린으로 컨트롤러, 서비스, 레포지토리 작성
-	•	REST API 기본 구현
+---
 
-✅ 6주차: Spring Data JPA & 코틀린
-	•	코틀린에서 JPA 활용 (@Entity, Repository)
-	•	Spring Data JPA와 Querydsl
-	•	코틀린 DSL을 활용한 쿼리 작성
+## 📗 (7~8주차): WebClient + JPA 저장 및 활용 API 구성
 
-✅ 7주차: 테스트 코드 작성
-	•	Kotest 또는 JUnit을 활용한 테스트
-	•	MockK을 이용한 Mocking
-	•	비동기 로직 테스트
+| 세부 주제 | 학습 목표 | 필수 학습 항목 |
+|-----------|------------|----------------|
+| WebClient로 외부 API 호출 | 외부 JSON API를 호출하고 데이터를 수신할 수 있다 | `WebClient.create()`, `.get().uri(...)`, `.retrieve().bodyToMono(...)`, `.awaitBody()` |
+| 외부 데이터를 DTO로 매핑 후 가공 | 응답 JSON을 Kotlin 데이터 클래스로 매핑할 수 있다 | `data class`, `@JsonProperty`, `ObjectMapper` |
+| Spring Data JPA 기본 사용 | Entity를 정의하고 저장/조회할 수 있다 | `@Entity`, `@Id`, `@GeneratedValue`, `JpaRepository`, `save()`, `findAll()`, `findById()` |
+| JPA 전용 테스트 구성 | Repository 단위 테스트를 작성할 수 있다 | `@DataJpaTest`, `TestEntityManager`, `@AutoConfigureTestDatabase`, H2 설정 |
+| 저장 데이터를 활용한 API 구성 | DB 데이터를 조건에 따라 가공해 응답할 수 있다 | `@Transactional`, `findByXxx()`, DTO 변환 매핑 |
+| 전체 흐름 통합 테스트 구성 | API → Service → DB 전체 흐름 테스트를 작성할 수 있다 | `@SpringBootTest`, `@Transactional`, `TestRestTemplate` 또는 `MockMvc` |
 
-✅ 8주차: WebFlux & 코루틴 적용
-	•	코루틴을 활용한 비동기 API 개발
-	•	Reactor와의 차이 이해
-	•	실습: WebFlux 기반 비동기 API 구현
+🎯 **이 회차 목표**: 외부 데이터를 JPA로 저장하고, 이를 활용한 API 흐름을 테스트 기반으로 구현할 수 있다.
+
+---
+
+## 📌 주요 실습 흐름 예시
+
+- `POST /festivals/import` → 외부 API 호출 → DB 저장
+- `GET /festivals` → 저장된 목록 조회
+- `GET /festivals/today` → 날짜 기반 필터링
+- 테스트: `@WebMvcTest`, `@DataJpaTest`, `@SpringBootTest`

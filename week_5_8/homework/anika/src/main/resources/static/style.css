@@ -1,0 +1,274 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    padding: 2rem;
+    max-width: 800px;
+    margin: auto;
+    transition: background-color 0.5s, color 0.5s;
+}
+
+h1 {
+    text-align: center;
+}
+
+.form {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+input {
+    flex: 1;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+}
+
+button, select {
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button {
+    background-color: #3b82f6;
+    color: white;
+}
+
+button:hover {
+    background-color: #2563eb;
+}
+
+.card {
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.images {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.images img {
+    width: 100px;
+    height: 100px;
+}
+
+.stats {
+    margin-top: 1rem;
+}
+
+.stat-label {
+    font-weight: 500;
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+}
+
+.stat-bar {
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+    transition: background 0.3s ease;
+}
+
+.stat-bar span {
+    display: block;
+    padding-left: 8px;
+    height: 24px;
+    line-height: 24px;
+    transition: background 0.3s ease;
+}
+
+#error {
+    color: red;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* Light Theme */
+.theme-light {
+    background-color: #f9fafb;
+    color: #1f2937;
+}
+
+.theme-light .card {
+    background-color: white;
+    border: 1px solid #e5e7eb;
+}
+
+.theme-light .stat-bar {
+    background-color: #e5e7eb;
+}
+
+.theme-light .stat-bar span {
+    background-color: #6366f1;
+    color: white;
+}
+
+/* Dark Theme */
+.theme-dark {
+    background-color: #111827;
+    color: #f1f5f9;
+}
+
+.theme-dark .card {
+    background-color: #1f2937;
+    border: 1px solid #374151;
+}
+
+.theme-dark .stat-bar {
+    background-color: #374151;
+}
+
+.theme-dark .stat-bar span {
+    background-color: #60a5fa;
+    color: black;
+}
+
+/* Rain Theme */
+.theme-rain {
+    background: #1e3a8a;
+    color: #e0f2fe;
+}
+
+.theme-rain .card {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid #60a5fa;
+}
+
+.theme-rain .stat-bar {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.theme-rain .stat-bar span {
+    background-color: #60a5fa;
+    color: black;
+}
+
+.rain-drop {
+    position: absolute;
+    width: 2px;
+    height: 20px;
+    background: #60a5fa;
+    animation: rain 1s linear infinite;
+    opacity: 0.6;
+    z-index: -1;
+    pointer-events: none;
+}
+
+@keyframes rain {
+    0% {
+        transform: translateY(-150vh);
+    }
+    100% {
+        transform: translateY(100vh);
+    }
+}
+
+/* Snow Theme */
+.theme-snow {
+    background: #1e293b;
+    color: #f1f5f9;
+}
+
+.theme-snow .card {
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid #94a3b8;
+}
+
+.theme-snow .stat-bar {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.theme-snow .stat-bar span {
+    background-color: #f9fafb;
+    color: #1e293b;
+}
+
+.snowflake {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: snow 1s linear infinite;
+    z-index: -1;
+    pointer-events: none;
+}
+
+@keyframes snow {
+    0% {
+        transform: translateY(-150vh);
+        opacity: 0.5;
+    }
+    100% {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+}
+
+/* Neon Theme */
+.theme-neon {
+    background: #000;
+    color: #39ff14;
+    animation: neon-glow 0.5s infinite alternate;
+}
+
+.theme-neon .card {
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 2px solid #39ff14;
+    box-shadow: 0 0 5px #39ff14,
+    0 0 10px #39ff14,
+    0 0 20px #39ff14,
+    0 0 40px #39ff14;
+    color: #39ff14;
+    animation: neon-glow 0.5s infinite alternate;
+}
+
+.theme-neon h1,
+.theme-neon h2 {
+    text-shadow: 0 0 5px #39ff14,
+    0 0 10px #39ff14,
+    0 0 20px #39ff14,
+    0 0 40px #39ff14;
+    animation: neon-glow 0.5s infinite alternate;
+}
+
+.theme-neon button {
+    background-color: #39ff14;
+    color: black;
+    border: none;
+    box-shadow: 0 0 5px #39ff14,
+    0 0 10px #39ff14;
+    animation: neon-glow 0.5s infinite alternate;
+}
+
+.theme-neon .stat-bar span {
+    background-color: #39ff14;
+    color: black;
+    box-shadow: 0 0 6px #39ff14,
+    0 0 10px #39ff14;
+    animation: neon-glow 1s infinite alternate;
+}
+
+@keyframes neon-glow {
+    0% {
+        box-shadow: 0 0 5px #39ff14,
+        0 0 10px #39ff14;
+    }
+    100% {
+        box-shadow: 0 0 10px #39ff14,
+        0 0 20px #39ff14,
+        0 0 30px #39ff14;
+    }
+}
+
