@@ -1,6 +1,6 @@
 package com.example.anika.pokemon.application.port.service
 
-import com.example.anika.pokemon.application.port.out.PokemonPort
+import com.example.anika.pokemon.application.port.outcoming.PokemonPort
 import com.example.anika.pokemon.domain.Pokemon
 import com.example.anika.pokemon.domain.Stat
 import io.mockk.every

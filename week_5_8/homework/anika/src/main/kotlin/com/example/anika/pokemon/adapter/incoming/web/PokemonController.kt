@@ -1,6 +1,6 @@
 package com.example.anika.pokemon.adapter.incoming.web
 
-import com.example.anika.pokemon.application.port.`in`.PokemonUseCase
+import com.example.anika.pokemon.application.port.incoming.PokemonUseCase
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable

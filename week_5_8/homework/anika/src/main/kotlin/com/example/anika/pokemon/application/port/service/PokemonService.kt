@@ -1,7 +1,7 @@
 package com.example.anika.pokemon.application.port.service
 
-import com.example.anika.pokemon.application.port.`in`.PokemonUseCase
-import com.example.anika.pokemon.application.port.out.PokemonPort
+import com.example.anika.pokemon.application.port.incoming.PokemonUseCase
+import com.example.anika.pokemon.application.port.outcoming.PokemonPort
 import com.example.anika.pokemon.domain.Pokemon
 import org.springframework.stereotype.Service
 

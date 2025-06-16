@@ -137,7 +137,6 @@ button:hover {
 .theme-rain {
     background: #1e3a8a;
     color: #e0f2fe;
-    overflow: hidden;
 }
 
 .theme-rain .card {
@@ -178,7 +177,6 @@ button:hover {
 .theme-snow {
     background: #1e293b;
     color: #f1f5f9;
-    overflow: hidden;
 }
 
 .theme-snow .card {

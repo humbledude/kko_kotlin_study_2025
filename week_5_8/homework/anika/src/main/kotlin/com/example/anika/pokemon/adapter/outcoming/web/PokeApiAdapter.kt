@@ -1,6 +1,6 @@
 package com.example.anika.pokemon.adapter.outcoming.web
 
-import com.example.anika.pokemon.application.port.out.PokemonPort
+import com.example.anika.pokemon.application.port.outcoming.PokemonPort
 import com.example.anika.pokemon.domain.Pokemon
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient

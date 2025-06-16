@@ -4,13 +4,16 @@
     <meta charset="UTF-8"/>
     <title>포켓몬 조회</title>
     <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body class="theme-light">
+<div id="theme-effects" style="pointer-events:none; position:fixed; inset:0; z-index:1"></div>
 <h1>포켓몬 정보 조회</h1>
 
 <div class="form">
     <input id="pokemonId" placeholder="포켓몬 ID 입력"/>
     <button onclick="getPokemon()">조회</button>
+    <button onclick="getFavoriteList()">즐겨찾기 목록</button>
     <select id="themeSelector" onchange="applyTheme()">
         <option value="light">라이트</option>
         <option value="dark">다크</option>
@@ -22,6 +25,7 @@
 
 <div id="error"></div>
 <div id="result"></div>
+<div id="favoriteList"></div>
 
 <script src="script.js"></script>
 </body>

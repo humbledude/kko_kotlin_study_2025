@@ -1,6 +1,6 @@
 package com.example.anika.pokemon.adapter.incoming.web
 
-import com.example.anika.pokemon.application.port.`in`.PokemonUseCase
+import com.example.anika.pokemon.application.port.incoming.PokemonUseCase
 import com.example.anika.pokemon.domain.Pokemon
 import com.example.anika.pokemon.domain.Stat
 import io.mockk.every
