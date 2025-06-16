@@ -30,10 +30,11 @@
   - [x] PokemonContentProvider 구현
   - [x] Pokemon 데이터를 Content 모델로 변환
 
-- [ ] **2.3 추천 시스템 기초**
-  - [ ] RecommendationEngine 인터페이스 정의
-  - [ ] RandomRecommendationEngine 구현 (초기 버전)
-  - [ ] 추천 모델 교체 가능한 구조 설정
+- [x] **2.3 추천 시스템 기초**
+  - [x] RecommendationEngine 인터페이스 정의
+  - [x] RandomRecommendationEngine 구현 (초기 버전)
+  - [x] 추천 모델 교체 가능한 구조 설정
+  - [x] 간단한 추천 API 컨트롤러 작성 (/api/pokemon-feed/recommendations)
 
 ### Phase 3: 핵심 API 구현
 - [ ] **3.1 피드 API**
