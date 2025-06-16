@@ -4,24 +4,21 @@ import com.joshua.feed.domain.auth.dto.LoginRequest
 import com.joshua.feed.domain.auth.dto.SignupRequest
 import com.joshua.feed.domain.user.User
 import com.joshua.feed.domain.user.UserRepository
+import io.mockk.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.mockito.Mock
-import org.mockito.Mockito.*
-import org.mockito.MockitoAnnotations
 
 class AuthServiceTest {
 
-    @Mock
     private lateinit var userRepository: UserRepository
-
     private lateinit var authService: AuthService
 
     @BeforeEach
     fun setup() {
-        MockitoAnnotations.openMocks(this)
+        userRepository = mockk(relaxed = true)
         authService = AuthService(userRepository)
+        clearAllMocks()
     }
 
     @Test
@@ -32,16 +29,14 @@ class AuthServiceTest {
             password = "password123",
             email = "test@example.com"
         )
-        
         val savedUser = User(
             id = 1L,
             username = signupRequest.username,
             password = signupRequest.password,
             email = signupRequest.email
         )
-
-        `when`(userRepository.existsByUsername(signupRequest.username)).thenReturn(false)
-        `when`(userRepository.save(any(User::class.java))).thenReturn(savedUser)
+        every { userRepository.existsByUsername(signupRequest.username) } returns false
+        every { userRepository.save(any()) } returns savedUser
 
         // when
         val result = authService.signup(signupRequest)
@@ -50,9 +45,8 @@ class AuthServiceTest {
         assert(result.userId == 1L)
         assert(result.username == signupRequest.username)
         assert(result.email == signupRequest.email)
-        
-        verify(userRepository).existsByUsername(signupRequest.username)
-        verify(userRepository).save(any(User::class.java))
+        verify { userRepository.existsByUsername(signupRequest.username) }
+        verify { userRepository.save(any()) }
     }
 
     @Test
@@ -63,8 +57,7 @@ class AuthServiceTest {
             password = "password123",
             email = "test@example.com"
         )
-
-        `when`(userRepository.existsByUsername(signupRequest.username)).thenReturn(true)
+        every { userRepository.existsByUsername(signupRequest.username) } returns true
 
         // when & then
         assertThrows<IllegalArgumentException> {
@@ -79,15 +72,13 @@ class AuthServiceTest {
             username = "testuser",
             password = "password123"
         )
-
         val user = User(
             id = 1L,
             username = loginRequest.username,
             password = loginRequest.password,
             email = "test@example.com"
         )
-
-        `when`(userRepository.findByUsername(loginRequest.username)).thenReturn(user)
+        every { userRepository.findByUsername(loginRequest.username) } returns user
 
         // when
         val result = authService.login(loginRequest)
@@ -105,8 +96,7 @@ class AuthServiceTest {
             username = "nonexistent",
             password = "password123"
         )
-
-        `when`(userRepository.findByUsername(loginRequest.username)).thenReturn(null)
+        every { userRepository.findByUsername(loginRequest.username) } returns null
 
         // when & then
         assertThrows<IllegalArgumentException> {
@@ -121,15 +111,13 @@ class AuthServiceTest {
             username = "testuser",
             password = "wrongpassword"
         )
-
         val user = User(
             id = 1L,
             username = loginRequest.username,
             password = "correctpassword",
             email = "test@example.com"
         )
-
-        `when`(userRepository.findByUsername(loginRequest.username)).thenReturn(user)
+        every { userRepository.findByUsername(loginRequest.username) } returns user
 
         // when & then
         assertThrows<IllegalArgumentException> {

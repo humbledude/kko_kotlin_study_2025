@@ -20,15 +20,15 @@
   - [x] 사용자 관리 서비스 구현
 
 ### Phase 2: 컨텐츠 시스템 구축
-- [ ] **2.1 컨텐츠 추상화 레이어**
-  - [ ] Content 인터페이스 정의
-  - [ ] ContentProvider 인터페이스 정의
-  - [ ] 기본 컨텐츠 서비스 구현
+- [x] **2.1 컨텐츠 추상화 레이어**
+  - [x] Content 인터페이스 정의 (→ Content 엔티티 body 필드로 통합)
+  - [x] ContentProvider 인터페이스 정의
+  - [x] 기본 컨텐츠 서비스 구현 (PokemonContent, PokemonContentProvider)
 
-- [ ] **2.2 Pokemon API 연동**
-  - [ ] Pokemon API 클라이언트 구현
-  - [ ] PokemonContentProvider 구현
-  - [ ] Pokemon 데이터를 Content 모델로 변환
+- [x] **2.2 Pokemon API 연동**
+  - [x] Pokemon API 클라이언트 구현
+  - [x] PokemonContentProvider 구현
+  - [x] Pokemon 데이터를 Content 모델로 변환
 
 - [ ] **2.3 추천 시스템 기초**
   - [ ] RecommendationEngine 인터페이스 정의

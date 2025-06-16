@@ -5,11 +5,12 @@ import com.joshua.feed.domain.auth.dto.AuthResponse
 import com.joshua.feed.domain.auth.dto.LoginRequest
 import com.joshua.feed.domain.auth.dto.SignupRequest
 import com.joshua.feed.domain.auth.service.AuthService
+import io.mockk.clearAllMocks
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mock
-import org.mockito.Mockito.*
-import org.mockito.MockitoAnnotations
 import org.springframework.http.MediaType
 import org.springframework.test.web.reactive.server.WebTestClient
 
@@ -17,17 +18,16 @@ class AuthControllerTest {
 
     private lateinit var webTestClient: WebTestClient
     private lateinit var objectMapper: ObjectMapper
-
-    @Mock
     private lateinit var authService: AuthService
 
     @BeforeEach
     fun setup() {
-        MockitoAnnotations.openMocks(this)
+        authService = mockk(relaxed = true)
         objectMapper = ObjectMapper()
         webTestClient = WebTestClient
             .bindToController(AuthController(authService))
             .build()
+        clearAllMocks()
     }
 
     @Test
@@ -45,7 +45,7 @@ class AuthControllerTest {
             email = signupRequest.email
         )
 
-        `when`(authService.signup(signupRequest)).thenReturn(authResponse)
+        every { authService.signup(signupRequest) } returns authResponse
 
         // when & then
         webTestClient.post()
@@ -59,7 +59,7 @@ class AuthControllerTest {
             .jsonPath("$.username").isEqualTo(signupRequest.username)
             .jsonPath("$.email").isEqualTo(signupRequest.email)
 
-        verify(authService).signup(signupRequest)
+        verify { authService.signup(signupRequest) }
     }
 
     @Test
@@ -76,7 +76,7 @@ class AuthControllerTest {
             email = "test@example.com"
         )
 
-        `when`(authService.login(loginRequest)).thenReturn(authResponse)
+        every { authService.login(loginRequest) } returns authResponse
 
         // when & then
         webTestClient.post()
@@ -90,7 +90,7 @@ class AuthControllerTest {
             .jsonPath("$.username").isEqualTo(loginRequest.username)
             .jsonPath("$.email").isEqualTo("test@example.com")
 
-        verify(authService).login(loginRequest)
+        verify { authService.login(loginRequest) }
     }
 
     @Test
