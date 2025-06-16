@@ -1,0 +1,19 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: pokemon-api
+  datasource:
+    url: jdbc:h2:mem:pokemondb
+    driver-class-name: org.h2.Driver
+    username: pride
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console 
