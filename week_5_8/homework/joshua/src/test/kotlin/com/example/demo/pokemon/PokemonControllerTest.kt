@@ -27,23 +27,12 @@ class PokemonControllerTest {
     @Autowired
     lateinit var pokeApiService: PokeApiService
 
-    val bulbasaur = MyPokemon(
-        id = 1,
-        name = "bulbasaur",
-        height = 7,
-        sprites = PokemonSprite(
-            backDefault = "backDefault",
-            frontDefault = "frontDefault",
-        ),
-        stats = listOf(
-            MyPokemonStat("hp", 30),
-            MyPokemonStat("attack", 30),
-        )
-    )
+    @Autowired
+    lateinit var favoriteService: FavoriteService
 
     @Test
     fun `정상 응답 케이스`() {
-        coEvery { pokeApiService.getMyPokemon(1) } returns bulbasaur
+        coEvery { pokeApiService.getMyPokemon(1) } returns Fixtures.bulbasaur
 
         mockMvc.get("/pokemon/1")
             .andExpect {
@@ -74,5 +63,8 @@ class PokemonControllerTest {
 class PokeApiServiceMockConfig {
     @Bean
     fun pokeApiService(): PokeApiService = mockk()
+
+    @Bean
+    fun favoriteService(): FavoriteService = mockk()
 }
 

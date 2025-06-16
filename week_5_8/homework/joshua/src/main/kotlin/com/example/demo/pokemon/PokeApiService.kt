@@ -1,7 +1,6 @@
 package com.example.demo.pokemon
 
 import com.example.demo.pokemon.model.MyPokemon
-import com.example.demo.pokemon.model.MyPokemonStat
 import com.example.demo.pokemon.model.Pokemon
 import com.example.demo.pokemon.model.PokemonNotFoundException
 import org.apache.coyote.BadRequestException
@@ -53,4 +52,5 @@ class PokeApiService(
     suspend fun getMyPokemon(id: Int): MyPokemon {
         return MyPokemon.fromPokemon(getPokemon(id))
     }
+
 }
