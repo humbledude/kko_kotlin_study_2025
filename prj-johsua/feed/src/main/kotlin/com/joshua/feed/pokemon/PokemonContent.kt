@@ -30,6 +30,7 @@ class PokemonContent(
             }
 
             return ContentEntity(
+                id = pokemon.id.toLong(),
                 title = pokemon.name.replaceFirstChar { it.uppercase() },
                 description = "포켓몬 #${pokemon.id} - ${pokemon.name.replaceFirstChar { it.uppercase() }}",
                 imageUrl = pokemon.sprites.frontDefault,

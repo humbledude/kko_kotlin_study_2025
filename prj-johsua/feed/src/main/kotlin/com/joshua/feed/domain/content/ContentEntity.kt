@@ -10,7 +10,6 @@ import java.time.LocalDateTime
 @Table(name = "contents")
 class ContentEntity(
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     override val id: Long = 0,
 
     @Column(nullable = false)

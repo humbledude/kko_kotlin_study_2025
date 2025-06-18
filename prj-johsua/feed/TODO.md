@@ -38,15 +38,15 @@
 
 ### Phase 3: 핵심 API 구현
 - [ ] **3.1 피드 API**
-  - [ ] GET /api/feed - 사용자별 피드 조회
-  - [ ] 중복 컨텐츠 방지 로직
-  - [ ] 페이징 처리
+  - [x] GET /api/feed - 사용자별 피드 조회
+  - [x] 중복 컨텐츠 방지 로직 (랜덤 추천에서 중복 없는 방식으로 구현)
+  - [ ] 페이징 처리 (피드 특성상 별도 페이징 불필요, 미구현)
 
 - [ ] **3.2 상호작용 API**
-  - [ ] POST /api/content/{id}/read - 읽음 처리
-  - [ ] POST /api/content/{id}/like - 좋아요
-  - [ ] POST /api/content/{id}/dislike - 싫어요
-  - [ ] 상호작용 데이터 저장
+  - [x] POST /api/content/{id}/read - 읽음 처리
+  - [x] POST /api/content/{id}/like - 좋아요
+  - [x] POST /api/content/{id}/dislike - 싫어요
+  - [x] 상호작용 데이터 저장
 
 ### Phase 4: 프론트엔드 구현
 - [ ] **4.1 기본 구조**
@@ -122,4 +122,10 @@
 - **Phase 4**: 1주 (기본 프론트엔드)
 - **Phase 5**: 1-2주 (개선 및 최적화)
 
-**총 예상 기간: 4-6주** 
+**총 예상 기간: 4-6주**
+
+## 오늘 작업 내역 (2024-06-13)
+- 피드 API(3.1): 중복 없는 랜덤 추천, 페이징 불필요로 결정
+- 상호작용 API(3.2): 읽음/좋아요/싫어요 기록 및 DB 저장 구현
+- PokemonContentProvider: DB 캐시 우선, 없으면 API에서 받아 저장하는 구조로 개선
+- H2 콘솔: WebFlux 환경에서는 404, spring-boot-starter-web 추가 시 사용 가능 (현재 WebFlux만 사용 중) 
