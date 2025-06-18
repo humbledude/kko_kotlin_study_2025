@@ -1,9 +1,9 @@
-package com.joshua.feed.domain.auth.service
+package com.joshua.feed.auth.service
 
-import com.joshua.feed.domain.auth.dto.AuthResponse
-import com.joshua.feed.domain.auth.dto.LoginRequest
-import com.joshua.feed.domain.auth.dto.SignupRequest
-import com.joshua.feed.domain.user.User
+import com.joshua.feed.auth.dto.AuthResponse
+import com.joshua.feed.auth.dto.LoginRequest
+import com.joshua.feed.auth.dto.SignupRequest
+import com.joshua.feed.domain.user.UserEntity
 import com.joshua.feed.domain.user.UserRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -19,7 +19,7 @@ class AuthService(
             throw IllegalArgumentException("이미 존재하는 사용자명입니다.")
         }
 
-        val user = User(
+        val user = UserEntity(
             username = request.username,
             password = request.password, // 실제로는 암호화 필요
             email = request.email

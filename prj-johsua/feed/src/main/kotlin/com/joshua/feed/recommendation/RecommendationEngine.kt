@@ -1,6 +1,6 @@
 package com.joshua.feed.recommendation
 
-import com.joshua.feed.domain.user.User
+import com.joshua.feed.domain.user.UserEntity
 
 interface RecommendationEngine {
     /**
@@ -9,5 +9,5 @@ interface RecommendationEngine {
      * @param count 추천할 컨텐츠의 개수
      * @return 추천된 컨텐츠 ID 목록
      */
-    suspend fun getRecommendedIds(user: User, count: Int): List<String>
+    suspend fun getRecommendedIds(user: UserEntity, count: Int): List<Long>
 } 

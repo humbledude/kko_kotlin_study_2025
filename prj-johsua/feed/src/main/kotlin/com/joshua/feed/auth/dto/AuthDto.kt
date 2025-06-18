@@ -1,4 +1,4 @@
-package com.joshua.feed.domain.auth.dto
+package com.joshua.feed.auth.dto
 
 data class LoginRequest(
     val username: String,

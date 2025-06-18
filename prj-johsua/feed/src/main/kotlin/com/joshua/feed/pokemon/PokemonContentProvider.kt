@@ -1,8 +1,8 @@
-package com.joshua.feed.content
+package com.joshua.feed.pokemon
 
 import com.joshua.feed.domain.content.Content
-import com.joshua.feed.domain.user.User
-import com.joshua.feed.pokemon.PokeApiService
+import com.joshua.feed.domain.content.ContentProvider
+import com.joshua.feed.domain.user.UserEntity
 import com.joshua.feed.recommendation.RecommendationEngine
 import org.springframework.stereotype.Service
 
@@ -13,11 +13,11 @@ class PokemonContentProvider(
 ) : ContentProvider {
     
     companion object {
-        const val MAX_POKEMON_ID = 898  // 현재 포켓몬 API에서 사용 가능한 최대 ID
-        private val ANONYMOUS_USER = User(username = "anonymous", password = "", email = "")
+        const val MAX_POKEMON_ID = 898L  // 현재 포켓몬 API에서 사용 가능한 최대 ID
+        private val ANONYMOUS_USER = UserEntity(username = "anonymous", password = "", email = "")
     }
 
-    override suspend fun getContent(id: String): Content {
+    override suspend fun getContent(id: Long): Content {
         val pokemon = pokeApiService.getPokemon(id.toInt())
         return PokemonContent(pokemon).content
     }

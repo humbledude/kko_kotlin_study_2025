@@ -1,9 +1,7 @@
-package com.joshua.feed.content
+package com.joshua.feed.pokemon
 
 import com.fasterxml.jackson.databind.node.ArrayNode
 import com.joshua.feed.domain.content.Content
-import com.joshua.feed.domain.user.User
-import com.joshua.feed.pokemon.PokeApiService
 import com.joshua.feed.pokemon.model.Pokemon
 import com.joshua.feed.pokemon.model.PokemonSprite
 import com.joshua.feed.pokemon.model.PokemonStat
@@ -33,7 +31,7 @@ class PokemonContentProviderTest {
     @Test
     fun `getContent는 포켓몬 ID로 컨텐츠를 조회한다`() = runBlocking {
         // given
-        val pokemonId = "1"
+        val pokemonId = 1L
         val pokemon = Pokemon(
             id = 1,
             name = "bulbasaur",
@@ -55,14 +53,13 @@ class PokemonContentProviderTest {
         assertEquals("Bulbasaur", result.title)
         assertEquals("포켓몬 #1 - Bulbasaur", result.description)
         assertEquals("front.png", result.imageUrl)
-        assertEquals("POKEMON", result.contentType)
     }
 
     @Test
     fun `getContents는 추천 엔진의 ID로 컨텐츠를 조회한다`() = runBlocking {
         // given
         val count = 2
-        val recommendedIds = listOf("1", "2")
+        val recommendedIds = listOf(1L, 2L)
         val pokemon1 = Pokemon(
             id = 1,
             name = "bulbasaur",
@@ -94,7 +91,7 @@ class PokemonContentProviderTest {
     @Test
     fun `getContent returns Content with correct data`() = runBlocking {
         // Given
-        val pokemonId = "1"
+        val pokemonId = 1L
         val pokemon = Pokemon(
             id = 1,
             name = "bulbasaur",
@@ -118,7 +115,6 @@ class PokemonContentProviderTest {
         assertEquals("Bulbasaur", content.title)
         assertEquals("포켓몬 #1 - Bulbasaur", content.description)
         assertEquals("https://example.com/bulbasaur.png", content.imageUrl)
-        assertEquals("POKEMON", content.contentType)
         assertEquals(7, content.body["height"].asInt())
         val statsNode = content.body["stats"] as ArrayNode
         assertEquals(2, statsNode.size())
@@ -143,7 +139,7 @@ class PokemonContentProviderTest {
             )
         )
         coEvery { pokeApiService.getPokemon(any()) } returns pokemon
-        coEvery { recommendationEngine.getRecommendedIds(any(), 3) } returns listOf("1", "1", "1")
+        coEvery { recommendationEngine.getRecommendedIds(any(), 3) } returns listOf(1L, 1L, 1L)
 
         // When
         val contents: List<Content> = provider.getContents(3)
@@ -152,7 +148,6 @@ class PokemonContentProviderTest {
         assertEquals(3, contents.size)
         contents.forEach { content ->
             assertEquals("Bulbasaur", content.title)
-            assertEquals("POKEMON", content.contentType)
         }
     }
 } 

@@ -16,4 +16,4 @@ class TestConfig {
             .setType(EmbeddedDatabaseType.H2)
             .build()
     }
-} 
+}

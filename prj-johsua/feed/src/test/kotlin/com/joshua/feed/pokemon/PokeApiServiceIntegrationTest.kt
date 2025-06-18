@@ -1,6 +1,5 @@
 package com.joshua.feed.pokemon
 
-import com.joshua.feed.pokemon.model.Pokemon
 import com.joshua.feed.pokemon.model.PokemonNotFoundException
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test

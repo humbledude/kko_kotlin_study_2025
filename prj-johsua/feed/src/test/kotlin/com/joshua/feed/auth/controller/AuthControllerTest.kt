@@ -1,10 +1,10 @@
-package com.joshua.feed.domain.auth.controller
+package com.joshua.feed.auth.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.joshua.feed.domain.auth.dto.AuthResponse
-import com.joshua.feed.domain.auth.dto.LoginRequest
-import com.joshua.feed.domain.auth.dto.SignupRequest
-import com.joshua.feed.domain.auth.service.AuthService
+import com.joshua.feed.auth.dto.AuthResponse
+import com.joshua.feed.auth.dto.LoginRequest
+import com.joshua.feed.auth.dto.SignupRequest
+import com.joshua.feed.auth.service.AuthService
 import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk

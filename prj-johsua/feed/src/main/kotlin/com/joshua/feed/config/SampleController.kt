@@ -1,4 +1,4 @@
-package com.joshua.feed
+package com.joshua.feed.config
 
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope

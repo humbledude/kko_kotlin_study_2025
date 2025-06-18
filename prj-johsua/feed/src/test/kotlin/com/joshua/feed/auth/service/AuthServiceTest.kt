@@ -1,8 +1,8 @@
-package com.joshua.feed.domain.auth.service
+package com.joshua.feed.auth.service
 
-import com.joshua.feed.domain.auth.dto.LoginRequest
-import com.joshua.feed.domain.auth.dto.SignupRequest
-import com.joshua.feed.domain.user.User
+import com.joshua.feed.auth.dto.LoginRequest
+import com.joshua.feed.auth.dto.SignupRequest
+import com.joshua.feed.domain.user.UserEntity
 import com.joshua.feed.domain.user.UserRepository
 import io.mockk.*
 import org.junit.jupiter.api.BeforeEach
@@ -29,7 +29,7 @@ class AuthServiceTest {
             password = "password123",
             email = "test@example.com"
         )
-        val savedUser = User(
+        val savedUser = UserEntity(
             id = 1L,
             username = signupRequest.username,
             password = signupRequest.password,
@@ -72,7 +72,7 @@ class AuthServiceTest {
             username = "testuser",
             password = "password123"
         )
-        val user = User(
+        val user = UserEntity(
             id = 1L,
             username = loginRequest.username,
             password = loginRequest.password,
@@ -111,7 +111,7 @@ class AuthServiceTest {
             username = "testuser",
             password = "wrongpassword"
         )
-        val user = User(
+        val user = UserEntity(
             id = 1L,
             username = loginRequest.username,
             password = "correctpassword",

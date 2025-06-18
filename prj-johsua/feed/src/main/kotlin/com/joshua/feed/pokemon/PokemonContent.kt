@@ -1,8 +1,8 @@
-package com.joshua.feed.content
+package com.joshua.feed.pokemon
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.node.ObjectNode
 import com.joshua.feed.domain.content.Content
+import com.joshua.feed.domain.content.ContentEntity
 import com.joshua.feed.pokemon.model.Pokemon
 import java.time.LocalDateTime
 
@@ -29,11 +29,10 @@ class PokemonContent(
                 }
             }
 
-            return Content(
+            return ContentEntity(
                 title = pokemon.name.replaceFirstChar { it.uppercase() },
                 description = "포켓몬 #${pokemon.id} - ${pokemon.name.replaceFirstChar { it.uppercase() }}",
                 imageUrl = pokemon.sprites.frontDefault,
-                contentType = "POKEMON",
                 body = body,
                 createdAt = LocalDateTime.now(),
                 updatedAt = LocalDateTime.now()
