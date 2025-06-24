@@ -1,0 +1,42 @@
+package com.joshua.feed.pokemon
+
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.joshua.feed.domain.content.Content
+import com.joshua.feed.domain.content.ContentEntity
+import com.joshua.feed.pokemon.model.Pokemon
+import java.time.LocalDateTime
+
+class PokemonContent(
+    private val pokemon: Pokemon
+) {
+    val content: Content
+        get() {
+            val body = ObjectMapper().createObjectNode().apply {
+                put("id", pokemon.id)
+                put("name", pokemon.name)
+                put("height", pokemon.height)
+                putArray("stats").apply {
+                    pokemon.stats.forEach { stat ->
+                        addObject().apply {
+                            put("baseStat", stat.baseStat)
+                            put("name", stat.stat.name)
+                        }
+                    }
+                }
+                putObject("sprites").apply {
+                    put("frontDefault", pokemon.sprites.frontDefault)
+                    put("backDefault", pokemon.sprites.backDefault)
+                }
+            }
+
+            return ContentEntity(
+                id = pokemon.id.toLong(),
+                title = pokemon.name.replaceFirstChar { it.uppercase() },
+                description = "포켓몬 #${pokemon.id} - ${pokemon.name.replaceFirstChar { it.uppercase() }}",
+                imageUrl = pokemon.sprites.frontDefault,
+                body = body,
+                createdAt = LocalDateTime.now(),
+                updatedAt = LocalDateTime.now()
+            )
+        }
+} 

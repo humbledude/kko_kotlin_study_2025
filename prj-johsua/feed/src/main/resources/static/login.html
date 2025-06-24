@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 - 피드 서비스</title>
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card fade-in">
+            <div class="login-header">
+                <div class="login-logo">🎯</div>
+                <h1>피드 서비스</h1>
+                <p class="login-subtitle">개인화된 컨텐츠를 만나보세요</p>
+            </div>
+
+            <form class="login-form" id="loginForm">
+                <!-- 에러 메시지 -->
+                <div class="error-message" id="errorMessage"></div>
+                
+                <!-- 성공 메시지 -->
+                <div class="success-message" id="successMessage"></div>
+
+                <div class="form-group">
+                    <label for="username" class="form-label">사용자명</label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username" 
+                        class="form-input" 
+                        placeholder="사용자명을 입력하세요"
+                        required
+                        autocomplete="username"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">비밀번호</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        class="form-input" 
+                        placeholder="비밀번호를 입력하세요"
+                        required
+                        autocomplete="current-password"
+                        minlength="6"
+                    >
+                </div>
+
+                <button type="submit" class="login-button" id="loginButton">
+                    <span class="button-text">로그인</span>
+                    <div class="spinner" style="display: none;"></div>
+                </button>
+            </form>
+
+            <div class="login-footer">
+                <p>계정이 없으신가요? <a href="#" id="showRegister">회원가입</a></p>
+            </div>
+        </div>
+
+        <!-- 회원가입 카드 (기본적으로 숨김) -->
+        <div class="login-card fade-in" id="registerCard" style="display: none;">
+            <div class="login-header">
+                <div class="login-logo">🎯</div>
+                <h1>회원가입</h1>
+                <p class="login-subtitle">새로운 계정을 만들어보세요</p>
+            </div>
+
+            <form class="login-form" id="registerForm">
+                <!-- 에러 메시지 -->
+                <div class="error-message" id="registerErrorMessage"></div>
+                
+                <!-- 성공 메시지 -->
+                <div class="success-message" id="registerSuccessMessage"></div>
+
+                <div class="form-group">
+                    <label for="registerUsername" class="form-label">사용자명</label>
+                    <input 
+                        type="text" 
+                        id="registerUsername" 
+                        name="username" 
+                        class="form-input" 
+                        placeholder="사용자명을 입력하세요"
+                        required
+                        minlength="2"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="registerEmail" class="form-label">이메일</label>
+                    <input 
+                        type="email" 
+                        id="registerEmail" 
+                        name="email" 
+                        class="form-input" 
+                        placeholder="your@email.com"
+                        required
+                        autocomplete="email"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="registerPassword" class="form-label">비밀번호</label>
+                    <input 
+                        type="password" 
+                        id="registerPassword" 
+                        name="password" 
+                        class="form-input" 
+                        placeholder="비밀번호를 입력하세요"
+                        required
+                        autocomplete="new-password"
+                        minlength="6"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword" class="form-label">비밀번호 확인</label>
+                    <input 
+                        type="password" 
+                        id="confirmPassword" 
+                        name="confirmPassword" 
+                        class="form-input" 
+                        placeholder="비밀번호를 다시 입력하세요"
+                        required
+                        autocomplete="new-password"
+                        minlength="6"
+                    >
+                </div>
+
+                <button type="submit" class="login-button" id="registerButton">
+                    <span class="button-text">회원가입</span>
+                    <div class="spinner" style="display: none;"></div>
+                </button>
+            </form>
+
+            <div class="login-footer">
+                <p>이미 계정이 있으신가요? <a href="#" id="showLogin">로그인</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 로딩 오버레이 -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p>처리 중...</p>
+        </div>
+    </div>
+
+    <script type="module">
+        import { AuthManager, AuthUtils } from '/js/auth.js';
+
+        // DOM 요소들
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const loginCard = document.querySelector('.login-card');
+        const registerCard = document.getElementById('registerCard');
+        const showRegisterLink = document.getElementById('showRegister');
+        const showLoginLink = document.getElementById('showLogin');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+
+        // 상태 관리
+        let isLoading = false;
+
+        // 로딩 상태 설정
+        const setLoading = (loading) => {
+            isLoading = loading;
+            if (loading) {
+                loadingOverlay.classList.add('show');
+            } else {
+                loadingOverlay.classList.remove('show');
+            }
+        };
+
+        // 에러 메시지 표시
+        const showError = (message, isRegister = false) => {
+            const errorElement = isRegister ? 
+                document.getElementById('registerErrorMessage') : 
+                document.getElementById('errorMessage');
+            
+            errorElement.textContent = message;
+            errorElement.classList.add('show');
+            
+            // 3초 후 자동으로 숨김
+            setTimeout(() => {
+                errorElement.classList.remove('show');
+            }, 3000);
+        };
+
+        // 성공 메시지 표시
+        const showSuccess = (message, isRegister = false) => {
+            const successElement = isRegister ? 
+                document.getElementById('registerSuccessMessage') : 
+                document.getElementById('successMessage');
+            
+            successElement.textContent = message;
+            successElement.classList.add('show');
+            
+            // 2초 후 자동으로 숨김
+            setTimeout(() => {
+                successElement.classList.remove('show');
+            }, 2000);
+        };
+
+        // 폼 전환 (로그인 ↔ 회원가입)
+        const toggleForm = (showRegister) => {
+            if (showRegister) {
+                loginCard.style.display = 'none';
+                registerCard.style.display = 'block';
+            } else {
+                loginCard.style.display = 'block';
+                registerCard.style.display = 'none';
+            }
+        };
+
+        // 로그인 폼 제출 처리
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (isLoading) return;
+
+            // 에러 메시지 초기화
+            AuthUtils.clearFieldErrors();
+            document.getElementById('errorMessage').classList.remove('show');
+
+            // 폼 데이터 수집
+            const formData = new FormData(loginForm);
+            const credentials = {
+                username: formData.get('username'),
+                password: formData.get('password')
+            };
+
+            // 유효성 검사
+            const validation = AuthUtils.validateForm(credentials);
+            if (!validation.isValid) {
+                AuthUtils.showFormErrors(validation.errors, showError);
+                return;
+            }
+
+            // 로그인 처리
+            const success = await AuthManager.login(credentials, showError, setLoading);
+            
+            if (success) {
+                console.log('로그인 성공!');
+                console.log('저장된 사용자 정보:', AuthManager.getCurrentUser());
+                console.log('localStorage 확인:', {
+                    currentUser: localStorage.getItem('currentUser'),
+                    authToken: localStorage.getItem('authToken')
+                });
+                
+                showSuccess('로그인 성공! 피드 페이지로 이동합니다.');
+                setTimeout(() => {
+                    window.location.href = '/feed.html';
+                }, 1000);
+            }
+        });
+
+        // 회원가입 폼 제출 처리
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (isLoading) return;
+
+            // 에러 메시지 초기화
+            AuthUtils.clearFieldErrors();
+            document.getElementById('registerErrorMessage').classList.remove('show');
+
+            // 폼 데이터 수집
+            const formData = new FormData(registerForm);
+            const userData = {
+                username: formData.get('username'),
+                email: formData.get('email'),
+                password: formData.get('password')
+            };
+            const confirmPassword = formData.get('confirmPassword');
+
+            // 비밀번호 확인
+            if (userData.password !== confirmPassword) {
+                showError('비밀번호가 일치하지 않습니다.', true);
+                return;
+            }
+
+            // 유효성 검사
+            const validation = AuthUtils.validateForm(userData);
+            if (!validation.isValid) {
+                AuthUtils.showFormErrors(validation.errors, (msg) => showError(msg, true));
+                return;
+            }
+
+            // 회원가입 처리
+            const success = await AuthManager.register(userData, (msg) => showError(msg, true), setLoading);
+            
+            if (success) {
+                showSuccess('회원가입 성공! 로그인 페이지로 이동합니다.', true);
+                setTimeout(() => {
+                    // 회원가입 폼을 숨기고 로그인 폼을 보여줌
+                    toggleForm(false);
+                    // 폼 초기화
+                    registerForm.reset();
+                }, 1000);
+            }
+        });
+
+        // 폼 전환 이벤트
+        showRegisterLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleForm(true);
+        });
+
+        showLoginLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleForm(false);
+        });
+
+        // 이미 로그인된 경우 피드 페이지로 리다이렉트
+        document.addEventListener('DOMContentLoaded', async () => {
+            const isLoggedIn = await AuthManager.isLoggedIn();
+            if (isLoggedIn) {
+                window.location.href = '/feed.html';
+            }
+        });
+
+        // 입력 필드 포커스 시 에러 제거
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('focus', () => {
+                input.classList.remove('error');
+                const errorElement = input.parentNode.querySelector('.field-error');
+                if (errorElement) {
+                    errorElement.remove();
+                }
+            });
+        });
+
+        // Enter 키로 폼 제출
+        document.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const activeElement = document.activeElement;
+                if (activeElement && activeElement.closest('form')) {
+                    activeElement.closest('form').dispatchEvent(new Event('submit'));
+                }
+            }
+        });
+    </script>
+</body>
+</html> 

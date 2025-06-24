@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>피드 서비스</title>
+    <link rel="stylesheet" href="/css/common.css">
+    <style>
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--bg-secondary);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 1rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading">
+        <div class="spinner"></div>
+        <span>로딩 중...</span>
+    </div>
+
+    <script type="module">
+        import { AuthManager } from '/js/auth.js';
+        
+        // 페이지 로드 시 인증 상태 확인
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const isLoggedIn = await AuthManager.isLoggedIn();
+                
+                if (isLoggedIn) {
+                    window.location.href = '/feed.html';
+                } else {
+                    window.location.href = '/login.html';
+                }
+            } catch (error) {
+                console.error('인증 상태 확인 실패:', error);
+                window.location.href = '/login.html';
+            }
+        });
+    </script>
+</body>
+</html> 
